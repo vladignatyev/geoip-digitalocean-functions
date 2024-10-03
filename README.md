@@ -18,7 +18,7 @@ This repository tries to fix this.
 # Deploy to DigitalOcean Functions
 ```doctl sls deploy --remote-build functions```
 
-# Invoke 
+# Invoke/Demo
 ```doctl serverless functions invoke example/geoIp --web```
 
 # Features
