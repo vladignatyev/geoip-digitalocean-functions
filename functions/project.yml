@@ -1,0 +1,19 @@
+parameters: {}
+environment: {}
+packages:
+    - name: example
+      shared: false
+      environment: {}
+      parameters: {}
+      annotations: {}
+      functions:
+        - name: geoIp
+          binary: false
+          main: ""
+          runtime: python:3.11
+          web: true
+          webSecure: false
+          parameters: {}
+          environment: {}
+          annotations: {}
+          limits: {}
