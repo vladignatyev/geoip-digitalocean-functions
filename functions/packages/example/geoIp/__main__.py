@@ -24,7 +24,7 @@ def main(args):
     country_reader = geoip2.database.Reader(COUNTRY_MMDB)
     asn_reader = geoip2.database.Reader(ASN_MMDB)
     
-    asn = -1
+    asn = UNKNOWN_ASN
     continent = UNKNOWN_CONTINENT
     country = UNKNOWN_COUNTRY
     
