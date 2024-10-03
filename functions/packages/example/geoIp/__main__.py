@@ -17,7 +17,7 @@ ASN_MMDB = "GeoLite2-ASN.mmdb"
 def main(args):
     '''
     HTTP endpoint of the cloud function.
-    
+
     -- args - arguments provided by DigitalOcean Functions environment
     '''
     try:  # Get the IP address of the client from proxy headers
