@@ -13,6 +13,9 @@ UNKNOWN_ASN = -1
 COUNTRY_MMDB = "GeoLite2-Country.mmdb"
 ASN_MMDB = "GeoLite2-ASN.mmdb"
 
+country_reader = geoip2.database.Reader(COUNTRY_MMDB)
+asn_reader = geoip2.database.Reader(ASN_MMDB)
+
 
 def main(args):
     '''
@@ -21,15 +24,9 @@ def main(args):
     -- args - arguments provided by DigitalOcean Functions environment
     '''
     try:  # Get the IP address of the client from proxy headers
-        ip_addr = args["http"]["headers"]["x-forwarded-for"]
+        ip_addr = args.get("ip", args["http"]["headers"]["x-forwarded-for"])
     except KeyError:
-        ip_addr = args.get("ip", None)
-
-    if ip_addr is None:
         return {"statusCode": HTTPStatus.BAD_REQUEST}
-
-    country_reader = geoip2.database.Reader(COUNTRY_MMDB)
-    asn_reader = geoip2.database.Reader(ASN_MMDB)
 
     asn = UNKNOWN_ASN
     continent = UNKNOWN_CONTINENT
