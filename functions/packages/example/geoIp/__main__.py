@@ -1,5 +1,10 @@
+'''
+IP2GEO API using MaxMind GeoLite2 DB
+'''
 from http import HTTPStatus
-import geoip2.database
+
+import geoip2.database  # pylint: disable=import-error
+from geoip2.errors import AddressNotFoundError  # pylint: disable=import-error
 
 UNKNOWN_CONTINENT = "U"
 UNKNOWN_COUNTRY = "U"
@@ -10,6 +15,11 @@ ASN_MMDB = "GeoLite2-ASN.mmdb"
 
 
 def main(args):
+    '''
+    HTTP endpoint of the cloud function.
+    
+    -- args - arguments provided by DigitalOcean Functions environment
+    '''
     try:  # Get the IP address of the client from proxy headers
         ip_addr = args["http"]["headers"]["x-forwarded-for"]
     except KeyError:
@@ -27,7 +37,7 @@ def main(args):
 
     try:
         asn = asn_reader.asn(ip_addr).autonomous_system_number
-    except Exception:
+    except AddressNotFoundError:
         pass
 
     try:
@@ -35,7 +45,7 @@ def main(args):
         continent = c.continent.code
         country = c.country.iso_code
         is_eu = c.country.is_in_european_union
-    except Exception:
+    except AddressNotFoundError:
         pass
 
     return {
